@@ -19,7 +19,7 @@ int main(int argc, char **argv)
 			printf("[Return: %d] Line #%d (%p): '%s'\n", ret, ++line, buff, buff);
 			free(buff);
 		}
-		//printf("[Return: %d] Line #%d: %s\n", ret, ++line, buff);
+		printf("[Return: %d] Line #%d: %s\n", ret, ++line, buff);
 		if (ret == -1)
 			printf("-----------\nError\n");
 		else if (ret == 0)

@@ -1,11 +1,2 @@
 here is the first string now
-here is a string i wrote in stdin
-here is a string i wrote in stdin
-here is a string i wrote in stdin
-here is a string i wrote in stdin
-here is a string i wrote in stdin
-here is a string i wrote in stdin
-here is a string i wrote in stdin
-here is a string i wrote in stdin
-this is what my keyboarthjkfghjkdfghjkdhjkghdfjkgkdjl
 awesome

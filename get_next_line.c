@@ -6,7 +6,7 @@
 /*   By: jean <jescully@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 16:36:29 by jean              #+#    #+#             */
-/*   Updated: 2020/12/02 12:18:35 by jean             ###   ########.fr       */
+/*   Updated: 2020/12/03 17:49:31 by jean             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,18 @@ char	*cleaned_up_line(char *line)
 	char *clean_line;
 
 	i = 0;	
-	if (!line)
-		 return (NULL);
-	while (line[i] != '\n')
+	if (!line || ft_strlen(line) == 0)
+	{	 
+		 clean_line = (char*)malloc(1);
+		 clean_line[0] = '\0';
+		 return (clean_line);
+	}
+
+	while (line[i] && line[i] != '\n')
 		i++;
 	if (!(clean_line = (char*)(malloc(sizeof(char) * (i + 1)))))
 		return (NULL);
-	ft_strlcpy(clean_line, line, i);
+	ft_strlcpy(clean_line, line, i + 1);
 	return (clean_line);
 }
 
@@ -32,31 +37,46 @@ static char	*leftovers(char *available_string)
 {
 	static char *new_string;
 
-	new_string = ft_strdup(ft_strchr(available_string, '\n')); //+1
+	if (!available_string || ft_strlen(available_string) == 0)
+		return (NULL);
+	if (!ft_strchr(available_string, '\n')) 
+		return NULL;
+	new_string = ft_strdup(ft_strchr(available_string, '\n') + 1);
 	free(available_string);
 	return (new_string);
 }
 
+int	check_the_input(char *bufstr, int const fd, char **line)
+{
+	if (fd < 0 || fd > 1024 || !bufstr || !line)
+	{
+		line = NULL;
+		return (0);
+	}
+	else
+		return (1);
+}
 
 int	get_next_line(int const fd, char **line)
 {
 	static char *available_string;
 	char bufstr[BUFFER_SIZE + 1];
 	int bytes;
-
-	while (!ft_strchr(available_string, '\n'))
+	
+	bytes = 1;
+	if (!check_the_input(bufstr, fd, line))
+		return -1;
+	if (BUFFER_SIZE <= 0)
+		return (-1);
+	while (!ft_strchr(available_string, '\n') && bytes != 0)
 	{
-		bytes = read(fd, bufstr, BUFFER_SIZE);
-		if (!bytes)
+		if ((bytes = read(fd, bufstr, BUFFER_SIZE)) == -1)
 			return (-1);
-		//here is where we protect bytes if there is an error, we just return -1
 		bufstr[bytes] = '\0';
 		available_string = ft_strjoin(available_string, bufstr);
 	}
-	//free(bufstr);
 	*line = cleaned_up_line(available_string);
 	available_string = leftovers(available_string);
-	if (!available_string)
-		return 0;
-	return (1);
-}	
+	bytes = ((bytes == 0 && ft_strlen(available_string) == 0) ? 0 : 1);
+	return (bytes);
+}
