@@ -6,7 +6,7 @@
 /*   By: jean <jescully@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 16:36:29 by jean              #+#    #+#             */
-/*   Updated: 2020/12/03 17:49:31 by jean             ###   ########.fr       */
+/*   Updated: 2020/12/03 19:03:20 by jean             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ static char	*leftovers(char *available_string)
 	if (!available_string || ft_strlen(available_string) == 0)
 		return (NULL);
 	if (!ft_strchr(available_string, '\n')) 
-		return NULL;
+	{
+			free(available_string);
+			return NULL;
+	}
 	new_string = ft_strdup(ft_strchr(available_string, '\n') + 1);
 	free(available_string);
 	return (new_string);

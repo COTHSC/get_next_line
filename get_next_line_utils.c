@@ -6,7 +6,7 @@
 /*   By: jean <jescully@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 18:34:14 by jean              #+#    #+#             */
-/*   Updated: 2020/12/03 17:11:51 by jean             ###   ########.fr       */
+/*   Updated: 2020/12/03 19:12:59 by jean             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strdup(const char *s)
 	char	*str;
 
 	if (!s)
-		return NULL;
+		return (NULL);
 	i = 0;
 	str = (char *)malloc(sizeof(char) * ft_strlen(s) + 1);
 	if (str == NULL)
@@ -36,15 +36,15 @@ size_t	ft_strlen(const char *s)
 {
 	int i;
 
-	if(!s)
-		return 0;
+	if (!s)
+		return (0);
 	i = 0;
 	while (s[i])
 		i++;
 	return (i);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	int		size;
 	char	*retstr;
@@ -52,12 +52,13 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	int		c;
 
 	if (!s1)
-		return(ft_strdup(s2));
+		return (ft_strdup(s2));
 	i = 0;
 	c = 0;
 	size = ft_strlen(s1) + ft_strlen(s2);
-	retstr = (char*)malloc(sizeof(retstr) * (size + 1));
-	if (retstr == NULL)
+	if (size == 0)
+		return (NULL);
+	if (!(retstr = (char*)malloc(sizeof(char) * (size + 1))))
 		return (NULL);
 	while (s1[i])
 	{
@@ -65,12 +66,9 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		i++;
 	}
 	while (s2[c])
-	{
-		retstr[i] = s2[c];
-		i++;
-		c++;
-	}
+		retstr[i++] = s2[c++];
 	retstr[i] = '\0';
+	free(s1);
 	return (retstr);
 }
 
@@ -81,7 +79,6 @@ char	*ft_strchr(const char *s, int c)
 
 	if (!s)
 		return (0);
-
 	cs = (char *)s;
 	i = 0;
 	while (s[i])
