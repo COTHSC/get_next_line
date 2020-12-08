@@ -6,7 +6,7 @@
 /*   By: jean <jescully@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 16:36:29 by jean              #+#    #+#             */
-/*   Updated: 2020/12/08 21:15:11 by jean             ###   ########.fr       */
+/*   Updated: 2020/12/08 21:26:00 by jean             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int			get_next_line(int const fd, char **line)
 	{
 		if ((bytes = read(fd, bufstr, BUFFER_SIZE)) == -1)
 		{
-			free (bufstr);
+			free(bufstr);
 			return (-1);
 		}
 		bufstr[bytes] = '\0';

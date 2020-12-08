@@ -6,7 +6,7 @@
 /*   By: jean <jescully@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 16:36:29 by jean              #+#    #+#             */
-/*   Updated: 2020/12/08 21:08:28 by jean             ###   ########.fr       */
+/*   Updated: 2020/12/08 21:25:20 by jean             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,10 @@ int			get_next_line(int const fd, char **line)
 	while (!ft_strchr(available_string, '\n') && bytes != 0)
 	{
 		if ((bytes = read(fd, bufstr, BUFFER_SIZE)) == -1)
-				return (-1);
+		{
+			free(bufstr);
+			return (-1);
+		}
 		bufstr[bytes] = '\0';
 		available_string = ft_strjoin(available_string, bufstr);
 	}
