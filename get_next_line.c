@@ -6,7 +6,7 @@
 /*   By: jean <jescully@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 16:36:29 by jean              #+#    #+#             */
-/*   Updated: 2020/12/03 19:19:55 by jean             ###   ########.fr       */
+/*   Updated: 2020/12/08 19:53:09 by jean             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ static int	check_the_input(char *bufstr, int const fd, char **line)
 {
 	if (fd < 0 || fd > 1024 || !bufstr || !line)
 	{
+		if (bufstr)
+			free (bufstr);
 		line = NULL;
 		return (0);
 	}
@@ -62,9 +64,11 @@ static int	check_the_input(char *bufstr, int const fd, char **line)
 int			get_next_line(int const fd, char **line)
 {
 	static char *available_string;
-	char		bufstr[BUFFER_SIZE + 1];
+	char		*bufstr;
 	int			bytes;
 
+	if (!(bufstr = (char*)(malloc(sizeof(char) * (BUFFER_SIZE + 1)))))
+		return -1;
 	bytes = 1;
 	if (!check_the_input(bufstr, fd, line))
 		return (-1);
@@ -73,10 +77,14 @@ int			get_next_line(int const fd, char **line)
 	while (!ft_strchr(available_string, '\n') && bytes != 0)
 	{
 		if ((bytes = read(fd, bufstr, BUFFER_SIZE)) == -1)
-			return (-1);
+		{
+				return (-1);
+				free(bufstr);
+		}
 		bufstr[bytes] = '\0';
 		available_string = ft_strjoin(available_string, bufstr);
 	}
+	free(bufstr);
 	*line = cleaned_up_line(available_string);
 	available_string = leftovers(available_string);
 	bytes = ((bytes == 0 && ft_strlen(available_string) == 0) ? 0 : 1);
