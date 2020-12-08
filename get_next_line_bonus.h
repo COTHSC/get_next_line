@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 13:43:14 by jescully          #+#    #+#             */
-/*   Updated: 2020/12/08 16:51:03 by jean             ###   ########.fr       */
+/*   Updated: 2020/12/08 21:32:30 by jean             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,4 @@ size_t			ft_strlcpy(char *dst, const char *src, size_t size);
 size_t			ft_strlen(const char *s);
 char			*ft_strdup(const char *s);
 char			*ft_strjoin(char *s1, char *s2);
-void			*ft_memmove(void *dest, const void *src, size_t n);
 #endif
